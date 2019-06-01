@@ -17,11 +17,11 @@ window.addEventListener('mousemove', function(event){
 	mouse.y = event.y;
 });
 
-window.addEventListener('click', function(event){
+document.querySelector('canvas').onclick = function(){
 	canvas.height = window.innerHeight;
 	console.log(event.x, event.y);
 
-});
+};
 
 window.addEventListener('resize', function(){
 	canvas.width = window.innerWidth;
