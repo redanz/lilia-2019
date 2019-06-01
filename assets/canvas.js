@@ -17,7 +17,7 @@ window.addEventListener('mousemove', function(event){
 	mouse.y = event.y;
 });
 
-document.querySelector('canvas').onclick = function(){
+document.querySelector('button').onclick = function(){
 	canvas.height = window.innerHeight;
 	console.log(event.x, event.y);
 
