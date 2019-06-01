@@ -18,8 +18,8 @@ window.addEventListener('mousemove', function(event){
 });
 
 document.querySelector('button').onclick = function(){
+	document.querySelector('#buttonDiv').remove();
 	canvas.height = window.innerHeight;
-	console.log(event.x, event.y);
 	mouse.x = undefined;
 	mouse.y = undefined;
 };
