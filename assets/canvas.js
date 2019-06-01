@@ -1,10 +1,9 @@
 var canvas = document.querySelector('canvas')
 canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.height = window.innerHeight / 2;
 
 
 var c = canvas.getContext('2d');
-
 
 var mouse = {
 	x: undefined,
@@ -19,7 +18,9 @@ window.addEventListener('mousemove', function(event){
 });
 
 window.addEventListener('click', function(event){
+	canvas.height = window.innerHeight;
 	console.log(event.x, event.y);
+
 });
 
 window.addEventListener('resize', function(){
@@ -33,7 +34,7 @@ function createCircles(num) {
 	for (var i = 0; i < num; i++) {
 		let radius = Math.random() * 19 + 1;
 		let x = Math.random() * (innerWidth - radius * 2) + radius;
-		let y = Math.random() * (innerHeight - radius * 2) + radius;
+		let y = Math.random() * (canvas.height - radius * 2) + radius;
 		let dx = (Math.random() - 0.5) * 5;
 		let dy = (Math.random() - 0.5) * 5;
 
@@ -71,7 +72,7 @@ function Circle(x, y, dx, dy, radius, color){
 			this.dx = -this.dx;
 		}
 
-		if (this.y - this.radius < 0 || this.y + this.radius > innerHeight) {
+		if (this.y - this.radius < 0 || this.y + this.radius > canvas.height) {
 			this.dy = -this.dy;
 		}
 
@@ -89,10 +90,12 @@ function Circle(x, y, dx, dy, radius, color){
 
 		this.draw();
 	}
+
 }
 
 function animate() {
-	c.clearRect(0, 0, innerWidth, innerHeight)
+	// console.log(canvas.width, innerWidth)
+	c.clearRect(0, 0, innerWidth, innerHeight);
 	for (var i = 0; i<circleArray.length; i++){
 		circleArray[i].update();
 	}
