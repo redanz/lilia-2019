@@ -12,10 +12,10 @@ var mouse = {
 
 var maxRadius = 50;
 
-window.addEventListener('mousemove', function(event){
-	mouse.x = event.x;
-	mouse.y = event.y;
-});
+// window.addEventListener('mousemove', function(event){
+// 	mouse.x = event.x;
+// 	mouse.y = event.y;
+// });
 
 document.querySelector('button').onclick = function(){
 	document.querySelector('#buttonDiv').remove();
@@ -132,10 +132,11 @@ function Emoji(x, y, dx, dy, emoji) {
 
 	this.draw = function(){
 		c.font="50px Comic Sans MS";
+		c.font.opacity="0.1";
 		c.fillText(emoji, this.x, this.y);
 	}
 
-	
+
 
 	this.onclick = function() {
 		console.log('yes')
