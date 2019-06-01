@@ -1,6 +1,6 @@
 var canvas = document.querySelector('canvas')
 canvas.width = window.innerWidth;
-canvas.height = window.innerHeight / 2;
+canvas.height = window.innerHeight / 4;
 
 
 var c = canvas.getContext('2d');
@@ -102,5 +102,5 @@ function animate() {
 	requestAnimationFrame(animate);
 }
 
-createCircles(100);
+createCircles(200);
 animate();
