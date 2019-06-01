@@ -49,6 +49,36 @@ function createCircles(num) {
 }
 
 
+var emojiArray = [];
+
+function createEmojis() {
+
+	function ranVal() {
+		var obj = {
+			x: undefined,
+			y: undefined,
+			dx: undefined,
+			dy: undefined
+		}
+
+		obj.x = Math.random() * (innerWidth - 30 * 2) + 30;
+		obj.y = Math.random() * (canvas.height - 30 * 2) + 30;
+		obj.dx = (Math.random() - 0.5) * 5;
+		obj.dy = (Math.random() - 0.5) * 5;
+
+		return obj;
+	}
+
+	// emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'🏝'));
+	// emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'🇬🇧'));
+	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'💜'));
+	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'💙'));
+	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'💚'));
+	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'💛'));
+	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'❤️'));
+	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'🧡'));
+}
+
 function Circle(x, y, dx, dy, radius, color){
 	this.x = x;
 	this.y = y;
@@ -94,14 +124,64 @@ function Circle(x, y, dx, dy, radius, color){
 
 }
 
+function Emoji(x, y, dx, dy, emoji) {
+	this.x = x;
+	this.y = y;
+	this.dx = dx;
+	this.dy = dy;
+
+	this.draw = function(){
+		c.font="50px Comic Sans MS";
+		c.fillText(emoji, this.x, this.y);
+	}
+
+	
+
+	this.onclick = function() {
+		console.log('yes')
+	}
+
+	this.update = function() {
+
+		if (this.x + 30 > innerWidth || this.x < 0) {
+			this.dx = -this.dx;
+		}
+
+		if (this.y - 10 < 0  || this.y + 10 > canvas.height) {
+			this.dy = -this.dy;
+		}
+
+		this.x += this.dx;
+		this.y += this.dy;
+
+		// interactivity
+		if (mouse.x - this.x < 50 && mouse.x - this.x > -50 && mouse.y - this.y < 50 && mouse.y - this.y > -50) {
+			// if (this.radius < maxRadius) {
+				this.font +=1;
+			// }
+		// } else if (this.radius > this.minRadius) {
+		} else {
+			this.font -= 1;
+		}
+
+		this.draw();
+	}
+}
+
+
+
 function animate() {
 	// console.log(canvas.width, innerWidth)
 	c.clearRect(0, 0, innerWidth, innerHeight);
-	for (var i = 0; i<circleArray.length; i++){
+	for (var j = 0; j < emojiArray.length; j++) {
+		emojiArray[j].update();
+	}
+	for (var i = 0; i < circleArray.length; i++){
 		circleArray[i].update();
 	}
 	requestAnimationFrame(animate);
 }
 
-createCircles(200);
+createCircles(100);
+createEmojis();
 animate();
