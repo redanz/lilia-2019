@@ -20,7 +20,8 @@ window.addEventListener('mousemove', function(event){
 document.querySelector('button').onclick = function(){
 	canvas.height = window.innerHeight;
 	console.log(event.x, event.y);
-
+	mouse.x = undefined;
+	mouse.y = undefined;
 };
 
 window.addEventListener('resize', function(){
