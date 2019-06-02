@@ -81,6 +81,8 @@ function createCircles(num) {
 var emojiArray = [];
 
 function createEmojis() {
+	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'🦄'));
+	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'🦁'));
 	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'💜'));
 	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'💙'));
 	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'💚'));
