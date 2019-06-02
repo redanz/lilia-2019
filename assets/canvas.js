@@ -10,6 +10,11 @@ var mouse = {
 	y: undefined
 }
 
+var click = {
+	x: undefined,
+	y: undefined
+}
+
 var maxRadius = 50;
 
 // window.addEventListener('mousemove', function(event){
@@ -20,9 +25,12 @@ var maxRadius = 50;
 document.querySelector('button').onclick = function(){
 	document.querySelector('#buttonDiv').remove();
 	canvas.height = window.innerHeight;
-	mouse.x = undefined;
-	mouse.y = undefined;
 };
+
+window.addEventListener('click', function(event){
+	click.x = event.x;
+	click.y = event.y;
+})
 
 window.addEventListener('resize', function(){
 	canvas.width = window.innerWidth;
@@ -32,12 +40,18 @@ window.addEventListener('resize', function(){
 var circleArray = [];
 
 function createCircles(num) {
-	for (var i = 0; i < num; i++) {
-		let radius = Math.random() * 19 + 1;
-		let x = Math.random() * (innerWidth - radius * 2) + radius;
-		let y = Math.random() * (canvas.height - radius * 2) + radius;
-		let dx = (Math.random() - 0.5) * 5;
-		let dy = (Math.random() - 0.5) * 5;
+	let radius;
+	let x;
+	let y;
+	let dx;
+	let dy
+
+	for (var i = 0; i < num-1; i++) {
+		radius = Math.random() * 19 + 1;
+		x = Math.random() * (innerWidth - radius * 2) + radius;
+		y = Math.random() * (canvas.height - radius * 2) + radius;
+		dx = (Math.random() - 0.5) * 5;
+		dy = (Math.random() - 0.5) * 5;
 
 		let r = Math.random() * 255;
 		let g = Math.random() * 255;
@@ -46,37 +60,43 @@ function createCircles(num) {
 		let color = 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
 		circleArray.push(new Circle(x, y, dx, dy, radius, color));
 	}
-}
 
+	let color = 'rgba(' + Math.random() * 255 + ', ' + Math.random() * 255 + ', ' + Math.random() * 255 + ', ' + 1 + ')';
+	radius = Math.random() * 19 + 1;
+	x = Math.random() * (innerWidth - radius * 2) + radius;
+	y = Math.random() * (canvas.height - radius * 2) + radius;
+	dx = (Math.random() - 0.5) * 5;
+	dy = (Math.random() - 0.5) * 5;
+
+	circleArray.push(new Circle(x, y, dx, dy, radius, color));
+}
 
 var emojiArray = [];
 
 function createEmojis() {
-
-	function ranVal() {
-		var obj = {
-			x: undefined,
-			y: undefined,
-			dx: undefined,
-			dy: undefined
-		}
-
-		obj.x = Math.random() * (innerWidth - 30 * 2) + 30;
-		obj.y = Math.random() * (canvas.height - 30 * 2) + 30;
-		obj.dx = (Math.random() - 0.5) * 5;
-		obj.dy = (Math.random() - 0.5) * 5;
-
-		return obj;
-	}
-
-	// emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'🏝'));
-	// emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'🇬🇧'));
 	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'💜'));
 	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'💙'));
 	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'💚'));
 	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'💛'));
 	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'❤️'));
 	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'🧡'));
+}
+
+function ranVal() {
+	// x min,max: [-2, canvas.width-50]
+	// y min,max: [44, canvas.height-3]
+	var obj = {
+		x: undefined,
+		y: undefined,
+		dx: undefined,
+		dy: undefined
+	}
+
+	obj.x = Math.random() * (canvas.width - 48) - 2;
+	obj.y = Math.random() * (canvas.height - 47) + 44;
+	obj.dx = (Math.random() - 0.5) * 5;
+	obj.dy = (Math.random() - 0.5) * 5;
+	return obj;
 }
 
 function Circle(x, y, dx, dy, radius, color){
@@ -129,26 +149,20 @@ function Emoji(x, y, dx, dy, emoji) {
 	this.y = y;
 	this.dx = dx;
 	this.dy = dy;
+	this.emoji = emoji;
 
 	this.draw = function(){
 		c.font="50px Comic Sans MS";
-		c.font.opacity="0.1";
 		c.fillText(emoji, this.x, this.y);
-	}
-
-
-
-	this.onclick = function() {
-		console.log('yes')
-	}
+	};
 
 	this.update = function() {
 
-		if (this.x + 30 > innerWidth || this.x < 0) {
+		if (this.x + 50 > innerWidth || this.x < -2) {
 			this.dx = -this.dx;
 		}
 
-		if (this.y - 10 < 0  || this.y + 10 > canvas.height) {
+		if (this.y - 43 < 0  || this.y + 4 > canvas.height) {
 			this.dy = -this.dy;
 		}
 
@@ -156,33 +170,33 @@ function Emoji(x, y, dx, dy, emoji) {
 		this.y += this.dy;
 
 		// interactivity
-		if (mouse.x - this.x < 50 && mouse.x - this.x > -50 && mouse.y - this.y < 50 && mouse.y - this.y > -50) {
-			// if (this.radius < maxRadius) {
-				this.font +=1;
-			// }
-		// } else if (this.radius > this.minRadius) {
-		} else {
-			this.font -= 1;
+		if (click.x != undefined) {
+			if (click.x - this.x < 60 && click.x - this.x > -10 && click.y - this.y < 10 && click.y - this.y > -60) {
+				emojiArray.push(new Emoji(this.x,this.y,ranVal().dx,ranVal().dy,this.emoji));
+				click.x = undefined;
+				click.y = undefined;
+			}
 		}
-
+		
 		this.draw();
 	}
 }
 
 
-
 function animate() {
-	// console.log(canvas.width, innerWidth)
 	c.clearRect(0, 0, innerWidth, innerHeight);
-	for (var j = 0; j < emojiArray.length; j++) {
-		emojiArray[j].update();
-	}
 	for (var i = 0; i < circleArray.length; i++){
 		circleArray[i].update();
 	}
+	for (var j = 0; j < emojiArray.length; j++) {
+		emojiArray[j].update();
+	}
+	
+	click.x = undefined;
+	click.y = undefined;
 	requestAnimationFrame(animate);
 }
 
-createCircles(100);
 createEmojis();
+createCircles(100);
 animate();
