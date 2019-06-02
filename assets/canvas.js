@@ -30,12 +30,12 @@ document.querySelector('button').onclick = function(){
 window.addEventListener('click', function(event){
 	click.x = event.x;
 	click.y = event.y;
-})
+});
 
-window.addEventListener('resize', function(){
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
-})
+// window.addEventListener('resize', function(){
+// 	canvas.width = window.innerWidth;
+// 	canvas.height = window.innerHeight;
+// });
 
 var circleArray = [];
 
@@ -181,7 +181,6 @@ function Emoji(x, y, dx, dy, emoji) {
 		this.draw();
 	}
 }
-
 
 function animate() {
 	c.clearRect(0, 0, innerWidth, innerHeight);
