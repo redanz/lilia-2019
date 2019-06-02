@@ -27,15 +27,22 @@ document.querySelector('button').onclick = function(){
 	canvas.height = window.innerHeight;
 };
 
-window.addEventListener('click', function(event){
+// window.addEventListener('click', function(event){
+// 	click.x = event.x;
+// 	click.y = event.y;
+// });
+
+document.onclick = function (event) {
 	click.x = event.x;
 	click.y = event.y;
-});
+};
 
-// window.addEventListener('resize', function(){
-// 	canvas.width = window.innerWidth;
-// 	canvas.height = window.innerHeight;
-// });
+canvas.onclick = function () {};
+
+window.addEventListener('resize', function(){
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+});
 
 var circleArray = [];
 
