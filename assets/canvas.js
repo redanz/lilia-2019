@@ -178,7 +178,8 @@ function Emoji(x, y, dx, dy, emoji) {
 
 		// interactivity
 		if (click.x != undefined) {
-			if (click.x - this.x < 60 && click.x - this.x > -10 && click.y - this.y < 10 && click.y - this.y > -60) {
+			// if (click.x - this.x < 60 && click.x - this.x > -10 && click.y - this.y < 10 && click.y - this.y > -60)
+			if (click.x - this.x < 80 && click.x - this.x > -30 && click.y - this.y < 30 && click.y - this.y > -80) {
 				emojiArray.push(new Emoji(this.x,this.y,ranVal().dx,ranVal().dy,this.emoji));
 				click.x = undefined;
 				click.y = undefined;
