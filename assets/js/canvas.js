@@ -34,8 +34,6 @@ document.querySelector('button').onclick = function(){
 // });
 
 document.onclick = function (event) {
-	audio.pause();
-	audio.play();
 	click.x = event.x;
 	click.y = event.y;
 };
@@ -184,6 +182,8 @@ function Emoji(x, y, dx, dy, emoji) {
 		// interactivity
 		if (click.x != undefined) {
 			if (click.x - this.x < 80 && click.x - this.x > -30 && click.y - this.y < 30 && click.y - this.y > -80) {
+				audio.currentTime = 0;
+				audio.play();
 				if (emojiMap[this.emoji] != undefined){
 					emojiArray.push(new Emoji(this.x,this.y,ranVal().dx,ranVal().dy,emojiMap[this.emoji][Math.floor(Math.random()*emojiMap[this.emoji].length)]));
 				} else {
