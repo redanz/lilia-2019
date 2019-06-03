@@ -4,6 +4,7 @@ canvas.height = window.innerHeight / 4;
 
 
 var c = canvas.getContext('2d');
+var audio = document.querySelector('#audio');
 
 var mouse = {
 	x: undefined,
@@ -33,6 +34,8 @@ document.querySelector('button').onclick = function(){
 // });
 
 document.onclick = function (event) {
+	audio.pause();
+	audio.play();
 	click.x = event.x;
 	click.y = event.y;
 };
@@ -180,7 +183,6 @@ function Emoji(x, y, dx, dy, emoji) {
 
 		// interactivity
 		if (click.x != undefined) {
-			// if (click.x - this.x < 60 && click.x - this.x > -10 && click.y - this.y < 10 && click.y - this.y > -60)
 			if (click.x - this.x < 80 && click.x - this.x > -30 && click.y - this.y < 30 && click.y - this.y > -80) {
 				if (emojiMap[this.emoji] != undefined){
 					emojiArray.push(new Emoji(this.x,this.y,ranVal().dx,ranVal().dy,emojiMap[this.emoji][Math.floor(Math.random()*emojiMap[this.emoji].length)]));
@@ -188,7 +190,6 @@ function Emoji(x, y, dx, dy, emoji) {
 					emojiArray.push(new Emoji(this.x,this.y,ranVal().dx,ranVal().dy,this.emoji));
 				}
 				
-				console.log(this.emoji)
 				click.x = undefined;
 				click.y = undefined;
 			}
