@@ -81,8 +81,8 @@ function createCircles(num) {
 var emojiArray = [];
 
 function createEmojis() {
-	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'🦄'));
-	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'🦁'));
+	// emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'🦄'));
+	// emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'🦁'));
 	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'💜'));
 	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'💙'));
 	emojiArray.push(new Emoji(ranVal().x,ranVal().y,ranVal().dx,ranVal().dy,'💚'));
@@ -182,7 +182,13 @@ function Emoji(x, y, dx, dy, emoji) {
 		if (click.x != undefined) {
 			// if (click.x - this.x < 60 && click.x - this.x > -10 && click.y - this.y < 10 && click.y - this.y > -60)
 			if (click.x - this.x < 80 && click.x - this.x > -30 && click.y - this.y < 30 && click.y - this.y > -80) {
-				emojiArray.push(new Emoji(this.x,this.y,ranVal().dx,ranVal().dy,this.emoji));
+				if (emojiMap[this.emoji] != undefined){
+					emojiArray.push(new Emoji(this.x,this.y,ranVal().dx,ranVal().dy,emojiMap[this.emoji][Math.floor(Math.random()*emojiMap[this.emoji].length)]));
+				} else {
+					emojiArray.push(new Emoji(this.x,this.y,ranVal().dx,ranVal().dy,this.emoji));
+				}
+				
+				console.log(this.emoji)
 				click.x = undefined;
 				click.y = undefined;
 			}
@@ -190,6 +196,15 @@ function Emoji(x, y, dx, dy, emoji) {
 		
 		this.draw();
 	}
+}
+
+var emojiMap = {
+	'❤️': ['🧚‍♀️','🎈'],
+	'🧡': ['🦁', '🎃'],
+	'💛': ['🐥', '🐯'],
+	'💚': ['🦖', '🐢'],
+	'💙': ['🐬', '🦋'],
+	'💜': ['🦄', '☂️']
 }
 
 function animate() {
